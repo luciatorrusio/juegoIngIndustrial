@@ -15,6 +15,7 @@ public class MoverTiempo : MonoBehaviour
     private IEnumerator Mover1Unidad()
     {
         yield return new WaitForSeconds(1);
+        print("tiempo parado?" + tiempoParado.ToString());
         if (!tiempoParado)
         {
             transform.position = new Vector3(transform.position.x + 1, transform.position.y);
