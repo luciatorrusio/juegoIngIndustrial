@@ -102,6 +102,8 @@ public class GameManager : MonoBehaviour
 
     public void IniciarPrueba()
     {
+        Tiempo.GetComponent<MoverTiempo>().Mover();
+        Tiempo.GetComponent<MoverTiempo>().ReiniciarPosicion();
         StartCoroutine(CorrerColumna(0));
     }
 
@@ -146,7 +148,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                DetenerTiempo();
+                print("poniendo e true");
                 Tiempo.GetComponent<MoverTiempo>().TiempoParado();
                 MenuError.SetActive(true);
                 // do something with the error
