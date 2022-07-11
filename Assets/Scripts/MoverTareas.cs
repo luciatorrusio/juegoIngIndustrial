@@ -13,40 +13,7 @@ public class MoverTareas : MonoBehaviour
     }
     void Update()
     {
-
-        //if(Input.touchCount > 0)
-        //{
-        //    switch (Input.GetTouch(0).phase)
-        //    {
-        //        case TouchPhase.Began:
-        //            posDedo = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
-        //            Collider2D targetObject = Physics2D.OverlapPoint(posDedo);
-        //            if (targetObject)
-        //            {
-        //                TareaSeleccionada = targetObject.transform.gameObject;
-        //                posInicial = TareaSeleccionada.transform.position;
-        //            }
-        //            break;
-        //        case TouchPhase.Canceled:
-        //            if(TareaSeleccionada != null)
-        //            {
-        //                TareaSeleccionada.transform.position = posInicial;
-        //                TareaSeleccionada = null;
-        //            }
-        //            break;
-        //        case TouchPhase.Ended:
-        //            TareaSeleccionada = null;
-        //            break;
-        //        case TouchPhase.Moved:
-        //            if(TareaSeleccionada != null)
-        //            {
-        //                posDedo = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
-        //                TareaSeleccionada.transform.position = posDedo;
-        //            }
-        //            break;
-        //    }
-        //}
-
+        
         if (Input.GetMouseButton(0) || Input.touchCount > 0)
         {
             if (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase.Equals(TouchPhase.Began)))
@@ -84,7 +51,7 @@ public class MoverTareas : MonoBehaviour
             int columna  = (int)(TareaSeleccionada.transform.position.x + 7 - TareaSeleccionada.GetComponent<Tarea>().duracion / 2);
             int fila = (int)(TareaSeleccionada.transform.position.y + 3 );
 
-            print("fila: " + fila + ", columna: " + columna);
+            // print("fila: " + fila + ", columna: " + columna);
 
             if (columna>=0 && columna+ (TareaSeleccionada.GetComponent<Tarea>().duracion-1) <= 13 && fila >=0 && fila <= 4 && gameObject.GetComponent<GameManager>().EsPosicionDisponible(TareaSeleccionada, fila, columna))
             {

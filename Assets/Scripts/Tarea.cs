@@ -19,8 +19,23 @@ public class Tarea : MonoBehaviour
         fila = -1;
         columna = -1;
         EscalarTamano();
+        MoverPosInicial();
     }
 
+    private void MoverPosInicial()
+    {
+        transform.localPosition = new Vector2(posInicialx, posInicialy);
+    }
+
+    public void PintarFondo()
+    {
+        //print("pintarrr");
+        transform.GetChild(1).GetComponent<SpriteRenderer>().color = new Vector4(255, 0, 0, 255);
+    }
+    public void DespintarFondo()
+    {
+        transform.GetChild(1).GetComponent<SpriteRenderer>().color = new Vector4(255, 255, 255, 255);
+    }
     private void EscalarTamano()
     {
         BoxCollider2D m_Collider = GetComponent<BoxCollider2D>();
@@ -76,13 +91,13 @@ public class Tarea : MonoBehaviour
 
     private void IniciarAnimacion()
     {
-        print("inicio animacion");
+        ///print("inicio animacion");
         // iniciar animacion
     }
 
     private void DetenerAnimacion()
     {
-        print("detengo aniacion");
+        //print("detengo aniacion");
         // detener animacion
     }
 

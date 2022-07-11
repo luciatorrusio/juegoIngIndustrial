@@ -13,21 +13,58 @@ public class GameManager : MonoBehaviour
     private GameObject[,] tareasPosicion;
     private List<GameObject> tareasTerminadas;
     [SerializeField]private List<GameObject> tareasTodas;
+    [SerializeField]private List<GameObject> tareasCaminoCritico;
     [SerializeField] private GameObject MenuError;
     [SerializeField] private GameObject ErrorText;
     [SerializeField] private GameObject FelicitacionesText;
+    [SerializeField] private GameObject TiempoProyectoText;
     [SerializeField] private GameObject Tiempo;
-
+    private float startTime;
+    private float totalTime;
     [SerializeField] private GameObject MenuFelicitaciones;
     
     private void Awake()
     {
+        totalTime = 0;
         tiempoPorUnidad = 1;
         matriz = new bool[numFilas, numColumnas];// por default esta en false
         tareasTerminadas = new List<GameObject>();
         tareasPosicion = new GameObject[numFilas, numColumnas];
     }
 
+    public void MostrarCaminoCritico()
+    {
+
+        
+        foreach (GameObject t in tareasCaminoCritico)
+        {
+            //print("mostrar camino");
+            t.GetComponent<Tarea>().PintarFondo();
+        }
+    }
+    public void StartTimer()
+    {
+        
+        startTime = Time.time;
+    }
+    public void ResetTimer()
+    {
+        totalTime = 0;
+    }
+    public void StopTimer()
+    {
+        totalTime +=  (Time.time - startTime);
+    }
+    public void QuitarCaminoCritico()
+    {
+
+
+        foreach (GameObject t in tareasCaminoCritico)
+        {
+            //print("mostrar camino");
+            t.GetComponent<Tarea>().DespintarFondo();
+        }
+    }
     public bool EsPosicionDisponible(GameObject tarea, int f, int c)
     {
         int duracion = tarea.GetComponent<Tarea>().duracion;
@@ -55,7 +92,7 @@ public class GameManager : MonoBehaviour
             aux += "\n";
 
         }
-        print(aux);
+        // print(aux);
     }
 
     public void AgregarTarea( GameObject tarea)
@@ -75,7 +112,7 @@ public class GameManager : MonoBehaviour
             matriz[fila, i+columna] = true;
         }
         tareasPosicion[fila, columna] = tarea;
-        printMatrix();
+        //printMatrix();
     }
 
     
@@ -117,16 +154,16 @@ public class GameManager : MonoBehaviour
             {
                 GameObject ultima =  tareasTerminadas[tareasTerminadas.Count-1];
                 int t = ultima.GetComponent<Tarea>().duracion + ultima.GetComponent<Tarea>().columna;
-                DetenerTiempo();
                 GameObject.Find("Tiempo").GetComponent<MoverTiempo>().TiempoParado();
                 MenuFelicitaciones.SetActive(true);
                 FelicitacionesText.GetComponent<TextMeshProUGUI>().text = "Tiempo utilizado: \n" + t.ToString() + " días";
+                int min = ((int)totalTime)/60;
+                TiempoProyectoText.GetComponent<TextMeshProUGUI>().text = "Tiempo de planificación:\n" + min.ToString() + " min "+(((int)totalTime) - (min*60)).ToString() + " s";
                 yield return new WaitForSeconds(0);
             }
             else
             {
                 e = new Error(2);
-                DetenerTiempo();
                 GameObject.Find("Tiempo").GetComponent<MoverTiempo>().TiempoParado();
                 MenuError.SetActive(true);
                 ErrorText.GetComponent<TextMeshProUGUI>().text = e.mensaje;
@@ -170,15 +207,6 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
-    public void DetenerTiempo()
-    {
-        //Time.timeScale = 0;
-    }
-    public void ReanudarTiempo()
-    {
-        //Time.timeScale = 1;
-    }
-
     public void NuevaPartida()
     {
         tareasTerminadas = new List<GameObject>();
@@ -188,6 +216,7 @@ public class GameManager : MonoBehaviour
         foreach (GameObject tarea in tareasTodas)
         {
             tarea.GetComponent<Tarea>().ReiniciarPosicion();
+            tarea.GetComponent<Tarea>().DespintarFondo();
         }
     }
     public void mejorarModelo()
