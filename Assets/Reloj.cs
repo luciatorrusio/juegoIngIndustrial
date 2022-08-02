@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
 
 public class Reloj : MonoBehaviour
 {
@@ -14,7 +14,7 @@ public class Reloj : MonoBehaviour
         corriendo = false;
         seconds = 0;
         minutes = 0;
-        gameObject.GetComponent<TextMeshProUGUI>().text = "00:00";
+        gameObject.GetComponent<Text>().text = "00:00";
         
     }
 
@@ -38,7 +38,7 @@ public class Reloj : MonoBehaviour
                 minutes++;
             }
             //After we have waited 5 seconds print the time again.
-            gameObject.GetComponent<TextMeshProUGUI>().text = minutes.ToString() + ":" + ((seconds < 10) ? ("0" + seconds.ToString()) : seconds.ToString());
+            gameObject.GetComponent<Text>().text = minutes.ToString() + ":" + ((seconds < 10) ? ("0" + seconds.ToString()) : seconds.ToString());
             StartCoroutine(Onesecond());
         }
     }
@@ -54,6 +54,6 @@ public class Reloj : MonoBehaviour
         corriendo = false;
         seconds = 0;
         minutes = 0;
-        gameObject.GetComponent<TextMeshProUGUI>().text = "00:00";
+        gameObject.GetComponent<Text>().text = "00:00";
     }
 }
