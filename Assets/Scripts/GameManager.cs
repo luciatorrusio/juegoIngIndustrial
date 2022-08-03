@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -156,9 +157,9 @@ public class GameManager : MonoBehaviour
                 int t = ultima.GetComponent<Tarea>().duracion + ultima.GetComponent<Tarea>().columna;
                 GameObject.Find("Tiempo").GetComponent<MoverTiempo>().TiempoParado();
                 MenuFelicitaciones.SetActive(true);
-                FelicitacionesText.GetComponent<TextMeshProUGUI>().text = "Tiempo utilizado: \n" + t.ToString() + " días";
+                FelicitacionesText.GetComponent<Text>().text = "Tiempo utilizado: \n" + t.ToString() + " días";
                 int min = ((int)totalTime)/60;
-                TiempoProyectoText.GetComponent<TextMeshProUGUI>().text = "Tiempo de planificación:\n" + min.ToString() + " min "+(((int)totalTime) - (min*60)).ToString() + " s";
+                TiempoProyectoText.GetComponent<Text>().text = "Tiempo de planificación:\n" + min.ToString() + " min "+(((int)totalTime) - (min*60)).ToString() + " s";
                 yield return new WaitForSeconds(0);
             }
             else
